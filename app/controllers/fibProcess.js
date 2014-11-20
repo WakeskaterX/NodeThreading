@@ -30,7 +30,6 @@ function fibonacciSequencer(req, res){
 
 	//Start with no threads:
 	this.process = function(){
-		try{
 			//NO THREAD TEST
 			/*
 			var num = fibo(number);
@@ -38,7 +37,7 @@ function fibonacciSequencer(req, res){
 			//NO THREAD END
 
 			//WEB WORKER TEST
-			var worker = new Worker(function(){
+			this.worker = new Worker(function(){
 				function fibo(n){
 					return n > 1 ? fibo(n-1) + fibo (n-2) : 1;
 				}
@@ -46,22 +45,16 @@ function fibonacciSequencer(req, res){
 				this.onmessage = function(event){
 					var num = fibo(Number(event.data));
 					postMessage(num);
-					self.close();
 				};
 			});
 
-			worker.onmessage = function(event){
+			this.worker.onmessage = function(event){
 				//console.log(event.data);
 				finish(null,event.data);
 			};
 
-			worker.postMessage(number);
+			this.worker.postMessage(number);
 			//WEB WORKER TEST END
-		}
-		catch(e){
-			finish(e, null);
-		}
-		
 	};
 
 
