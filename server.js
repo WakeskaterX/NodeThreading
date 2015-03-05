@@ -3,7 +3,21 @@ var express = require('express'),
 	mongoose = require('mongoose'),
 	http = require('http'),
 	bodyParser = require('body-parser'),
-	fibProcess = require('./app/controllers/fibProcess');
+	fibProcess = require('./app/controllers/fibProcess'),
+	cluster = require('cluster'),
+	numCPUs = require('os').cpus().length;
+
+
+if (cluster.isMaster){
+	for (var i = 0; i < numCPUs; i++){
+		cluster.fork();
+	}
+
+	cluster.on('exit',function(worker,code,signal){
+		console.log('worker '+worker.process.pid+' died!');
+	});
+} else {
+
 
 var app = express();
 var port = 3030;
@@ -43,3 +57,5 @@ app.use('/',router);
 app.listen(port, function() {
 	console.log('Server Started:  Listening on port '+port);
 });
+
+}
