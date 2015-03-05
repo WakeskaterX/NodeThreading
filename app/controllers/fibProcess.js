@@ -29,69 +29,10 @@ function fibonacciSequencer(req, res){
 	}
 
 	//Start with no threads:
-	this.process = function(){
-			
-				var num = fibo(number);
-				finish(null, num);
-			
-			//NO THREAD TEST
-			/*
-			var num = fibo(number);
-			finish(null, num);*/
-			//NO THREAD END
-			/*if (!useThreads){
-				var num = fibo(number);
-				finish(null, num);
-			} else {
-				var num = fibo(number);
-				finish(null, num);
-				//WEB WORKER TEST
-				/*this.worker = new Worker(function(){
-					function fibo(n){
-						return n > 1 ? fibo(n-1) + fibo (n-2) : 1;
-					}
-
-					this.onmessage = function(event){
-						var num = fibo(Number(event.data));
-						postMessage(num);
-					};
-				});
-
-				this.worker.onmessage = function(event){
-					//console.log(event.data);
-					finish(null,event.data);
-				};
-
-				this.worker.postMessage(number);
-				
-				var workItem = {
-					work: function(){
-						return function(){
-							function fibo(n){
-								return n > 1 ? fibo(n-1) + fibo (n-2) : 1;
-							}
-
-							this.onmessage = function(event){
-								var num = fibo(Number(event.data));
-								postMessage(num);
-							};
-						};
-					},
-					finish: function(){
-						return function(){
-							finish(null,event.data);
-						};
-					},
-					number: num
-				};
-
-				wpQueue.enqueue(workItem);
-			}*/
-			//WEB WORKER TEST END
+	this.process = function(){	
+		var num = fibo(number);
+		finish(null, num);
 	};
-
-
-	//QUEUE UP OBJECT:  {work: function(){}, finish: function(){}}
 
 }	
 

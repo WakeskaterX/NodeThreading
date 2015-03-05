@@ -7,10 +7,6 @@ var express = require('express'),
 
 var app = express();
 var port = 3030;
-var wpOptions = {
-	maxThreads: 4
-};
-
 
 router = express.Router();
 
